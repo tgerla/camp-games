@@ -251,7 +251,7 @@ class MarkovTransitionGenerator:
 if __name__ == "__main__":
     # Sample texts designed for diverse transitions with sentence endings
     sample_texts = [
-        "The camper was happy to make art and camper was tired of swimming. The camper was excited to hike.",
+        "The camper was happy to make art and the camper was tired of swimming. The camper was excited to hike.",
         "The leader was happy to sleep and the leader was tired of art. The leader ran from bees.",
         "The weather was sunny. The weather was rainy. The weather was cloudy. The camper ran from friends.",
         "The food tastes good. The food tastes salty. The food tastes sweet. The food tastes fresh.", 

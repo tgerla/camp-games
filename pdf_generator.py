@@ -3,7 +3,7 @@ from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib.colors import HexColor, black, white
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
 from reportlab.platypus.doctemplate import PageTemplate, BaseDocTemplate
 from reportlab.platypus.frames import Frame
 from reportlab.platypus.tableofcontents import TableOfContents
@@ -74,8 +74,13 @@ class MarkovPDFGenerator:
             fontSize=10,
             fontName='Helvetica-Bold',
             textColor=HexColor('#2E4057'),
-            spaceAfter=4,
-            spaceBefore=2
+            spaceAfter=3,
+            spaceBefore=8,
+            borderWidth=1,
+            borderColor=HexColor('#048A81'),
+            backColor=HexColor('#F0F8FF'),
+            borderPadding=4,
+            alignment=TA_LEFT
         )
     
     def load_json_data(self, filename):
@@ -263,15 +268,20 @@ class MarkovPDFGenerator:
             # Create a keep-together group for each word and its table
             elements = []
             
-            # State header
-            state_header = f"<b>'{state}'</b>"
+            # State header with better visual separation
+            state_header = f"Current word: <b>'{state}'</b>"
             elements.append(Paragraph(state_header, self.word_style))
-            elements.append(Spacer(1, 2))
+            elements.append(Spacer(1, 3))
             
             # Create transition table
             table = self.create_transition_table(state, mappings)
             elements.append(table)
-            elements.append(Spacer(1, 8))
+            
+            # Add horizontal rule after each word section
+#            elements.append(Spacer(1, 5))
+#            elements.append(HRFlowable(width="100%", thickness=1, 
+#                                    color=HexColor('#CCCCCC'), 
+#                                    spaceBefore=2, spaceAfter=8))
             
             # Keep each word and its table together
             story.append(KeepTogether(elements))
